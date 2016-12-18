@@ -5,7 +5,7 @@ import numpy as np
 import time
 
 
-def my_betacv_simple(data, labels, size=3000, metric='euclidean'):
+def betacv_simple(data, labels, size=3000, metric='euclidean'):
     n = labels.shape[0]
     n_slices = ceil(n/size)
     intra = 0
@@ -39,7 +39,7 @@ def my_betacv_simple(data, labels, size=3000, metric='euclidean'):
     print('simple n_out:', n_out)
     return betacv
 
-def my_betacv(data, labels, metric='euclidean'):
+def betacv(data, labels, metric='euclidean'):
     distances = pairwise_distances(data, metric=metric)
     n = labels.shape[0]
     A = np.array([intra_cluster_distance(distances[i], labels, i)
@@ -55,10 +55,10 @@ def my_betacv(data, labels, metric='euclidean'):
     N_out = np.array([i*(n-i) for i in members])
     n_out = np.sum(N_out)
     betacv = (a/n_in)/(b/n_out)
-    # print('intra:', a)
-    # print('inter:', b)
-    # print('n_in :', n_in)
-    # print('n_out:', n_out)
+    print('intra:', a)
+    print('inter:', b)
+    print('n_in :', n_in)
+    print('n_out:', n_out)
     return betacv
 
 def intra_cluster_distance(distances_row, labels, i):
